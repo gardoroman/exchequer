@@ -19,7 +19,7 @@ defmodule ExChequer do
   #---------------------------------------------------------------------------
   def convert_amount_to_text(amount) when is_number(amount), do: convert_amount_to_text(to_string(amount))
 
-  def convert_amount_to_text(amount) do
+  def convert_amount_to_text(amount) when is_binary(amount) do
       [dollars | cents ] = String.split(amount, ".")
       groupings = create_number_groupings(dollars)
       group_indices = Enum.count(groupings) - 1
@@ -100,7 +100,7 @@ defmodule ExChequer do
   # Adds spacing
   #---------------------------------------------------------------------------
   defp format_number_text(""), do: ""
-  defp format_number_text(number_text), do: number_text <> " "
+  defp format_number_text(number_text), do: String.trim(number_text) <> " "
 
  end
 
