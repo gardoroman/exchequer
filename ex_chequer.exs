@@ -37,7 +37,18 @@ defmodule ExChequer do
   #---------------------------------------------------------------------------
   defp format_cents([]), do: ""
   defp format_cents([""]), do: ""
-  defp format_cents([cents]), do: " AND #{cents}/100"
+  defp format_cents([cents]) do
+    two_digits = ensure_two_digits(cents, String.length(cents))
+    " AND #{two_digits}/100"
+  end
+
+
+  #---------------------------------------------------------------------------
+  # ensure_two_digits/2
+  # Ensures that the cents field contains two numbers.
+  #---------------------------------------------------------------------------
+  defp ensure_two_digits(cents, 1), do: cents <> "0"
+  defp ensure_two_digits(cents, 2), do: cents
 
   #---------------------------------------------------------------------------
   # create_number_groupings/1
